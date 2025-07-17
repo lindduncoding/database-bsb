@@ -123,6 +123,38 @@ Triggers adalah script khusus SQL yang akan berjalan ketika seuatu event terjadi
 
 ## 2. Menjalankan Server
 
+Komponen Backend projek ini menggunakan FastAPI. Berikut adalah langkah untuk menjalankan server:
+
+1. Install Requirements
+
+Install dependensi menggunakan `pip`. Pastikan Python versi 3.12 ke atas dan disarankan membuat virtual environment ketika melakukan instalasi dependensi:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+2. Menjalankan Uvicorn
+
+Jalankan server FastAPI menggunakan Uvicorn supaya ketika terdapat perubahan, server akan langsung me-refresh (mirip nodemon):
+
+```bash
+uvicorn main:app --reload
+```
+
+- `main` adalah nama file Python utama (contohnya `main.py`).
+- `app` adalah nama objek FastAPI yang dideklarasikan di code.
+- `--reload` menyalakan mode auto-refresh.
+
+Server dapat diakses di alamat default `http://127.0.0.1:8000` atau ganti `127.0.0.1` dengan IP address lokal tempat server dipasang. 
+
+4. Informasi Tambahan
+
+Bisa diakses melalui [dokumentasi FastAPI](https://fastapi.tiangolo.com/).
+
+### API Endpoint
+
 UNDER CONSTRUCTION
 
 ## 3. Mengakses Admin Panel
