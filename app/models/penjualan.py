@@ -11,7 +11,7 @@ class Penjualan(Base):
     pembeli_id = Column(Integer, ForeignKey("pembeli.pembeli_id"), nullable=False)
     sampah_id = Column(Integer, ForeignKey("sampah.sampah_id"), nullable=False)
     harga_jual = Column(Float, nullable=False)
-    tanggal_jual = Column(DateTime, default=datetime.utcnow, nullable=False)
+    tanggal_jual = Column(DateTime, default=datetime.now, nullable=False)
 
     # Python level relationship, not SQL level
     # Abstract SQL relationship even more, easier for OOP

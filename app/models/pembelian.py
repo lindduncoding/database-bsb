@@ -11,7 +11,7 @@ class Pembelian(Base):
     nasabah_id = Column(Integer, ForeignKey("nasabah.nasabah_id"), nullable=False)
     sampah_id = Column(Integer, ForeignKey("sampah.sampah_id"), nullable=False)
     harga_beli = Column(Float, nullable=False)
-    tanggal_beli = Column(DateTime, default=datetime.utcnow, nullable=False)
+    tanggal_beli = Column(DateTime, default=datetime.now, nullable=False)
 
     nasabah = relationship("Nasabah")
     sampah = relationship("Sampah")
