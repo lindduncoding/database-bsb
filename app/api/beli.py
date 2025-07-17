@@ -1,0 +1,36 @@
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+# User defined imports
+from config import get_db
+from crud import beli as crud_beli
+
+router = APIRouter()
+
+# Pydantic is for data validation, unlike Mongoose that automatically validates data
+
+class BeliRequest(BaseModel):
+    tipe_sampah: int
+    berat: float
+    nasabah_id: int
+
+# Already defined in main to have prefix "beli"
+@router.post("/")
+def beli(request: BeliRequest, db: Session = Depends(get_db)):
+    try:
+        pembelian = crud_beli.create_pembelian(
+            db=db,
+            tipe_sampah=request.tipe_sampah,
+            berat=request.berat,
+            nasabah_id=request.nasabah_id
+        )
+        return {
+            "message": "Pembelian berhasil",
+            "invoice_no": pembelian.no_invoice,
+            "harga_beli": pembelian.harga_beli
+        }
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=400, detail=str(e))
