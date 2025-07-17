@@ -37,10 +37,11 @@ CREATE TABLE `sampah` (
   `sampah_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `berat` float NOT NULL DEFAULT 0,
   `tipe_sampah` bigint(20) unsigned NOT NULL,
+  `is_sold` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`sampah_id`),
   KEY `sampah_harga_satuan_FK` (`tipe_sampah`),
   CONSTRAINT `sampah_harga_satuan_FK` FOREIGN KEY (`tipe_sampah`) REFERENCES `harga_satuan` (`tipe_sampah`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- sampah.pembelian definition
 
