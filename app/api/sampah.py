@@ -1,38 +1,33 @@
-from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
+from pydantic import BaseModel
 
-# User defined imports
 from config import get_db
 from crud import sampah as crud_sampah
 
 router = APIRouter()
 
-# Pydantic is for data validation, unlike Mongoose that automatically validates data
-
-class LihatSampahRequest(BaseModel):
-    sold: Optional[bool] = None
-    tipe_sampah: Optional[bool] = None
-
 class SampahOut(BaseModel):
     sampah_id: int
     tipe_sampah: int
     stok: float
+    is_sold: bool
 
-# Already defined in main to have prefix "beli"
+    class Config:
+        from_atrributes = True
+
 @router.get("/", response_model=List[SampahOut])
-def lihat(request: Optional[LihatSampahRequest], db: Session = Depends(get_db)):
+def lihat_sampah(
+    sold: Optional[bool] = Query(None),
+    tipe_sampah: Optional[int] = Query(None),
+    db: Session = Depends(get_db)
+):
     try:
-        sampah = crud_sampah.lihat_sampah(
+        return crud_sampah.lihat_sampah(
             db=db,
-            tipe_sampah=request.tipe_sampah if request else None,
-            sold=request.sold if request else None
+            sold=sold,
+            tipe_sampah=tipe_sampah
         )
-
-        return sampah
-
     except Exception as e:
-        import traceback
-        traceback.print_exc()
         raise HTTPException(status_code=400, detail=str(e))
