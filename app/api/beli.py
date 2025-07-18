@@ -13,7 +13,7 @@ router = APIRouter()
 class BeliRequest(BaseModel):
     tipe_sampah: int
     berat: float
-    nasabah_id: int
+    no_rekening: str
 
 # Already defined in main to have prefix "beli"
 @router.post("/")
@@ -23,7 +23,7 @@ def beli(request: BeliRequest, db: Session = Depends(get_db)):
             db=db,
             tipe_sampah=request.tipe_sampah,
             berat=request.berat,
-            nasabah_id=request.nasabah_id
+            no_rekening=request.no_rekening
         )
         return {
             "message": "Pembelian berhasil",

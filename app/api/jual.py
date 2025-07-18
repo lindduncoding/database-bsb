@@ -11,9 +11,9 @@ router = APIRouter()
 # Pydantic is for data validation, unlike Mongoose that automatically validates data
 
 class JualRequest(BaseModel):
-    sampah_id: int
+    tipe_sampah: int
     berat: float
-    pembeli_id: int
+    nama_pembeli: str
 
 # Already defined in main to have prefix "jual"
 @router.post("/")
@@ -21,9 +21,9 @@ def jual(request: JualRequest, db: Session = Depends(get_db)):
     try:
         pemjualan = crud_jual.create_penjualan(
             db=db,
-            sampah_id=request.sampah_id,
+            tipe_sampah=request.tipe_sampah,
             berat=request.berat,
-            pembeli_id=request.pembeli_id
+            nama_pembeli=request.nama_pembeli
         )
         return {
             "message": "Pemjualan berhasil",

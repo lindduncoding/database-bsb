@@ -6,4 +6,4 @@ class Nasabah(Base):
 
     nasabah_id = Column(Integer, primary_key=True, index=True)
     nama = Column(String, unique=True, nullable=False)
-    nomor_rekening = Column(String, unique=True, nullable=False)
+    no_rekening = Column(String, unique=True, nullable=False)

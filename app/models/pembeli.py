@@ -6,4 +6,4 @@ class Pembeli(Base):
 
     pembeli_id = Column(Integer, primary_key=True, index=True)
     nama = Column(String, unique=True, nullable=False)
-    nomor_pembeli = Column(String, unique=True, nullable=False)
+    no_pembeli = Column(String, unique=True, nullable=False)

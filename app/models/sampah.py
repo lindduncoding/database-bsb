@@ -7,7 +7,7 @@ class Sampah(Base):
 
     sampah_id = Column(Integer, primary_key=True, index=True)
     tipe_sampah = Column(Integer, ForeignKey("harga_satuan.tipe_sampah"), nullable=False)
-    berat = Column(Float, nullable=False)
+    stok = Column(Float, nullable=False, default=0)
     is_sold = Column(Boolean, default=False)
 
     harga_satuan = relationship("HargaSatuan")
