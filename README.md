@@ -140,7 +140,7 @@ pip install -r requirements.txt
 Jalankan server FastAPI menggunakan Uvicorn supaya ketika terdapat perubahan, server akan langsung me-refresh (mirip nodemon):
 
 ```bash
-uvicorn main:app --reload
+uvicorn main:app -h 0.0.0.0 --reload
 ```
 
 - `main` adalah nama file Python utama (contohnya `main.py`).
@@ -149,13 +149,20 @@ uvicorn main:app --reload
 
 Server dapat diakses di alamat default `http://127.0.0.1:8000` atau ganti `127.0.0.1` dengan IP address lokal tempat server dipasang. 
 
-4. Informasi Tambahan
+3. Informasi Tambahan
 
 Bisa diakses melalui [dokumentasi FastAPI](https://fastapi.tiangolo.com/).
 
-### API Endpoint
+### API Endpoints
 
-UNDER CONSTRUCTION
+| Keperluan                                              | URL                                     | Metode | Parameter             |
+|-------------------------------------------------------------|-----------------------------------------|--------|------------------------|
+| Lihat stok sampah                                               | api/sampah/              | GET   | tipe_sampah, is_sold   (opsional)                   |
+| Lihat rekap penjualan                       | api/export/penjualan?format=               | GET    | format csv atau xlsx (default csv)                      |
+| Lihat rekap pembelian                                          | api/export/pembelian?format=            | GET    | format csv atau xlsx (default csv)                     |
+| Tambah nasabah                                            | api/nasabah/          | POST |                     |
+| Beli sampah              | api/beli/         | POST | -                     |
+| Jual sampah                                            | api/jual/          | POST | -                     |
 
 ## 3. Mengakses Admin Panel
 

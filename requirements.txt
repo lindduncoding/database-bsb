@@ -1,6 +1,8 @@
 fastapi[standard]
+jinja2
 uvicorn
 pandas
 sqlalchemy
 pymysql
 pydantic
+openpyxl

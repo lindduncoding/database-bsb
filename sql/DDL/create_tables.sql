@@ -3,11 +3,17 @@
 CREATE TABLE `nasabah` (
   `nasabah_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `nama` varchar(100) NOT NULL,
-  `no_rekening` varchar(16) NOT NULL,
+  `no_rekening` varchar(16) NOT NULL DEFAULT '0',
+  `dusun` varchar(100) NOT NULL DEFAULT 'Kuniran',
+  `desa` varchar(100) NOT NULL DEFAULT 'Krandegan',
+  `kecamatan` varchar(100) NOT NULL DEFAULT 'Bulukerto',
+  `kota_kabupaten` varchar(100) NOT NULL DEFAULT 'Kabupaten Wonogiri',
+  `provinsi` varchar(100) NOT NULL DEFAULT 'Jawa Tengah',
+  `kode_pos` varchar(6) NOT NULL DEFAULT '57697',
   PRIMARY KEY (`nasabah_id`),
   UNIQUE KEY `nasabah_unique` (`nama`),
   UNIQUE KEY `nasabah_unique_1` (`no_rekening`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- sampah.pembeli definition
 
