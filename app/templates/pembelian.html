@@ -1,0 +1,33 @@
+<h2 class="subtitle">Daftar Pembelian</h2>
+<div class="mb-4">
+  <a href="/api/export/pembelian" class="button is-link" download="pembelian.csv" hx-boost="false" hx-ignore="true">
+  Download Laporan CSV
+  </a>
+  <a href="/api/export/pembelian?format=xlsx" class="button is-success" download="pembelian.csv" hx-boost="false" hx-ignore="true">
+  Download Laporan XLSX
+  </a>
+</div>
+<table class="table is-striped is-fullwidth">
+  <thead>
+    <tr>
+      <th>Invoice</th>
+      <th>Berat</th>
+      <th>Harga Beli</th>
+      <th>Tanggal</th>
+      <th>No Rekening</th>
+      <th>Nama Sampah</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+      <tr>
+        <td>{{ item.no_invoice }}</td>
+        <td>{{ item.berat }}</td>
+        <td>{{ item.harga_beli }}</td>
+        <td>{{ item.tanggal_beli }}</td>
+        <td>{{ item.no_rekening }}</td>
+        <td>{{ item.nama_sampah }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,21 @@
+<h2 class="subtitle">Daftar Sampah</h2>
+<table class="table is-striped is-fullwidth">
+    <thead>
+        <tr>
+            <th>Tipe Sampah</th>
+            <th>Nama Sampah</th>
+            <th>Stok (kg atau unit)</th>
+            <th>Status Penjualan</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.tipe_sampah }}</td>
+            <td>{{ item.nama_sampah }}</td>
+            <td>{{ item.stok }}</td>
+            <td>{{ "Habis Terjual" if item.is_sold else "Masih Ada Stok" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -13,6 +13,7 @@ class SampahOut(BaseModel):
     tipe_sampah: int
     stok: float
     is_sold: bool
+    nama_sampah: str
 
     class Config:
         from_atrributes = True

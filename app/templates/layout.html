@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistem Pencatatan Bank Sampah Berseri</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body hx-boost="true">
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Sistem Pencatatan Bank Sampah Berseri</h1>
+            <div class="tabs is-boxed">
+                <ul>
+                    <li><a href="" hx-get="/sampah" hx-swap="innerHTML" hx-target="#main">Sampah</a></li>
+                    <li><a href="" hx-get="/pembelian" hx-swap="innerHTML" hx-target="#main">Pembelian</a></li>
+                    <li><a href="" hx-get="/penjualan" hx-swap="innerHTML" hx-target="#main">Penjualan</a></li>
+                    <li><a a href="" hx-get="/nasabah" hx-swap="innerHTML" hx-target="#main">Nasabah</a></li>
+                </ul>
+            </div>
+            <div id="main">
+            <!-- HTMX content here -->
+            </div>
+        </div>
+    </section>
+</body>
+</html>
