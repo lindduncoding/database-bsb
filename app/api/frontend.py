@@ -1,12 +1,14 @@
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
-from models import Pembelian, Penjualan, Sampah
+from models import Pembelian, Penjualan, Sampah, HargaSatuan, Nasabah, Pembeli
 from config import get_db
 from fastapi.templating import Jinja2Templates
 
 from crud.export import export_table_as_dataframe
 from crud.sampah import lihat_sampah
+from crud.nasabah import get_all_nasabah
+from crud.harga import get_harga
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
@@ -37,6 +39,38 @@ def penjualan_dashboard(request: Request, db: Session = Depends(get_db)):
 def sampah_dashboard(request: Request, db: Session = Depends(get_db)):
     items = lihat_sampah(db)
     return templates.TemplateResponse("sampah.html", {
+        "request": request,
+        "items": items
+    })
+
+@router.get("/beli", response_class=HTMLResponse)
+async def get_pembelian_form(request: Request, db: Session = Depends(get_db)):
+    harga_satuan = db.query(HargaSatuan).all()
+    return templates.TemplateResponse("beli.html", {
+        "request": request,
+        "harga_satuan": harga_satuan
+    })
+
+@router.get("/jual", response_class=HTMLResponse)
+async def get_penjualan_form(request: Request, db: Session = Depends(get_db)):
+    harga_satuan = db.query(HargaSatuan).all()
+    return templates.TemplateResponse("jual.html", {
+        "request": request,
+        "harga_satuan": harga_satuan
+    })
+
+@router.get("/nasabah", response_class=HTMLResponse)
+def nasabah_dashboard(request: Request, db: Session = Depends(get_db)):
+    items = get_all_nasabah(db)
+    return templates.TemplateResponse("nasabah.html", {
+        "request": request,
+        "items": items
+    })
+
+@router.get("/harga", response_class=HTMLResponse)
+def harga_dashboard(request: Request, db: Session = Depends(get_db)):
+    items = get_harga(db)
+    return templates.TemplateResponse("upload_harga.html", {
         "request": request,
         "items": items
     })

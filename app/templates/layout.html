@@ -5,6 +5,7 @@
     <title>Sistem Pencatatan Bank Sampah Berseri</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
 </head>
 <body hx-boost="true">
     <section class="section">
@@ -13,9 +14,12 @@
             <div class="tabs is-boxed">
                 <ul>
                     <li><a href="" hx-get="/sampah" hx-swap="innerHTML" hx-target="#main">Sampah</a></li>
+                    <li><a a href="" hx-get="/nasabah" hx-swap="innerHTML" hx-target="#main">Nasabah</a></li>
+                    <li><a a href="" hx-get="/harga" hx-swap="innerHTML" hx-target="#main">Harga Satuan</a></li>
                     <li><a href="" hx-get="/pembelian" hx-swap="innerHTML" hx-target="#main">Pembelian</a></li>
                     <li><a href="" hx-get="/penjualan" hx-swap="innerHTML" hx-target="#main">Penjualan</a></li>
-                    <li><a a href="" hx-get="/nasabah" hx-swap="innerHTML" hx-target="#main">Nasabah</a></li>
+                    <li><a href="" hx-get="/beli" hx-swap="innerHTML" hx-target="#main">Beli</a></li>
+                    <li><a href="" hx-get="/jual" hx-swap="innerHTML" hx-target="#main">Jual</a></li>
                 </ul>
             </div>
             <div id="main">

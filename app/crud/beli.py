@@ -8,6 +8,7 @@ def create_pembelian(db: Session, tipe_sampah: int, berat: float, no_rekening: s
 
     if sampah:
         sampah.stok += berat
+        sampah.is_sold = False
     else:
         sampah = models_sampah.Sampah(tipe_sampah=tipe_sampah, stok=berat)
         db.add(sampah)

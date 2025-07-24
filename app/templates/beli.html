@@ -1,0 +1,36 @@
+<h2 class="subtitle">Tambah Pembelian</h2>
+
+<form hx-post="/api/beli/" hx-target="#pembelian-form-message" hx-swap="innerHTML" hx-ext="json-enc" enctype="application/json" class="box mb-5">
+  <div class="field">
+    <label class="label">Nomor Rekening Nasabah</label>
+    <div class="control">
+      <input class="input" type="text" name="no_rekening" required>
+    </div>
+  </div>
+
+    <div class="field">
+    <label class="label">Tipe Sampah</label>
+    <div class="control">
+        <div class="select">
+        <select name="tipe_sampah" required>
+            {% for hs in harga_satuan %}
+            <option value="{{ hs.tipe_sampah }}">{{ hs.nama_sampah }}</option>
+            {% endfor %}
+        </select>
+        </div>
+    </div>
+    </div>
+
+  <div class="field">
+    <label class="label">Berat (kg) atau Unit (satuan)</label>
+    <div class="control">
+      <input class="input" type="number" step="0.01" name="berat" required>
+    </div>
+  </div>
+
+  <div class="control">
+    <button class="button is-primary" type="submit">Simpan Pembelian</button>
+  </div>
+</form>
+
+<div id="pembelian-form-message"></div>

@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from typing import List, Dict
 from models.harga_satuan import HargaSatuan
 import pandas as pd
 
@@ -26,3 +27,7 @@ def upload_harga(db: Session, df: pd.DataFrame):
             db.add(new_harga)
 
     db.commit()
+
+def get_harga(db:Session)->List[Dict]:
+    harga = db.query(HargaSatuan).all()
+    return harga

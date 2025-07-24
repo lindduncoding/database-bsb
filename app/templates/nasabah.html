@@ -1,0 +1,93 @@
+<h2 class="subtitle">Tambah Nasabah</h2>
+<button 
+  class="button is-link mb-3" 
+  onclick="toggleForm()"
+>
+  Tambah Nasabah
+</button>
+<div id="nasabah-form-container" class="box" style="display: none;">
+    <form hx-post="/api/nasabah/daftar" hx-target="#nasabah-form-message" hx-swap="innerHTML" hx-ext="json-enc" enctype="application/json">
+    <div class="field">
+        <label class="label">Nama</label>
+        <div class="control">
+        <input class="input" type="text" name="nama" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Dusun</label>
+        <div class="control">
+        <input class="input" type="text" name="dusun" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Desa</label>
+        <div class="control">
+        <input class="input" type="text" name="desa" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Kecamatan</label>
+        <div class="control">
+        <input class="input" type="text" name="kecamatan" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Kota/Kabupaten</label>
+        <div class="control">
+        <input class="input" type="text" name="kota_kabupaten" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Provinsi</label>
+        <div class="control">
+        <input class="input" type="text" name="provinsi" required>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Kode Pos</label>
+        <div class="control">
+        <input class="input" type="text" name="kode_pos" required>
+        </div>
+    </div>
+    <button class="button is-success" type="submit">Tambah</button>
+    </form>
+</div>
+
+<div id="nasabah-form-message"></div>
+
+<h2 class="subtitle">Daftar Nasabah</h2>
+<table class="table is-striped is-fullwidth">
+    <thead>
+        <tr>
+            <th>No Rekening</th>
+            <th>Nama Nasabah</th>
+            <th>Dusun</th>
+            <th>Desa</th>
+            <th>Kecamatan</th>
+            <th>Kota/Kabupaten</th>
+            <th>Provinsi</th>
+            <th>Kode Pos</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.no_rekening }}</td>
+            <td>{{ item.nama }}</td>
+            <td>{{ item.dusun }}</td>
+            <td>{{ item.desa }}</td>
+            <td>{{ item.kecamatan }}</td>
+            <td>{{ item.kota_kabupaten }}</td>
+            <td>{{ item.provinsi }}</td>
+            <td>{{ item.kode_pos }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+  function toggleForm() {
+    const form = document.getElementById("nasabah-form-container");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+  }
+</script>
