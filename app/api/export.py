@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.responses import StreamingResponse
+from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 import io
 import pandas as pd
+from typing import Annotated
 
 from config import get_db
 from crud.export import export_table_as_dataframe
@@ -10,9 +12,11 @@ from models.pembelian import Pembelian
 from models.penjualan import Penjualan
 
 router = APIRouter()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @router.get("/export/{table_name}")
 def export_data(
+    token: Annotated[str, Depends(oauth2_scheme)],
     table_name: str,
     format: str = Query("csv", enum=["csv", "xlsx"]),
     db: Session = Depends(get_db)

@@ -1,19 +1,62 @@
-<form hx-post="/login" hx-target="#login-msg" hx-swap="innerHTML" method="post" class="box">
-  <div class="field">
-    <label class="label">Username</label>
-    <div class="control">
-      <input class="input" type="text" name="username" required>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <script>
+    document.addEventListener("htmx:afterRequest", function(event) {
+      if (event.detail.xhr.responseURL.includes("/token") && event.detail.successful) {
+        try {
+          const data = JSON.parse(event.detail.xhr.responseText);
+          if (data.access_token) {
+          localStorage.setItem("access_token", data.access_token);
+          document.querySelector("#login-message").innerText = "Login berhasil!"
+          // Redirect to dashboard
+          htmx.ajax(
+            'GET', '/dashboard', {
+            target: 'body',
+            swap: 'outerHTML'
+          })
+          }
+        } catch (e) {
+          document.querySelector("#login-message").innerText = "Gagal memproses token."
+        }
+        }
+      })
+
+    document.addEventListener("htmx:configRequest", function(event) {
+      const token = localStorage.getItem("access_token")
+      console.log(token)
+        if (token) {
+          event.detail.headers['Authorization'] = `Bearer ${token}`
+        }
+    })
+  </script>
+</head>
+<body>
+<form hx-post="/token"
+      hx-target="#login-message"
+      hx-swap="innerHTML"
+      hx-encoding="application/x-www-form-urlencoded"
+      class="box">
+    <div class="field">
+        <label class="label">Username</label>
+        <input class="input" type="text" name="username" required>
     </div>
-  </div>
-  <div class="field">
-    <label class="label">Password</label>
-    <div class="control">
-      <input class="input" type="password" name="password" required>
+
+    <div class="field">
+        <label class="label">Password</label>
+        <input class="input" type="password" name="password" required>
     </div>
-  </div>
-  <div class="control">
-    <button class="button is-primary" type="submit">Login</button>
-  </div>
+
+    <div class="control">
+        <button class="button is-primary" type="submit">Login</button>
+    </div>
 </form>
 
-<div id="login-msg"></div>
+<div id="login-message"></div>
+</body>
+</html>

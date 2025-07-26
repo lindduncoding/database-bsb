@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from api import beli, jual, harga, sampah, nasabah, export, frontend, auth
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Backend routers
 app.include_router(beli.router, prefix="/api/beli", tags=["Beli"])

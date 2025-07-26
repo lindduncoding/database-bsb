@@ -1,13 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
-from typing import List
+from typing import List, Annotated
 from pydantic import BaseModel
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session 
+from fastapi.security import OAuth2PasswordBearer
 
 # User defined imports
 from config import get_db
 from crud import nasabah as crud_nasabah
 
 router = APIRouter()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # Pydantic is for data validation, unlike Mongoose that automatically validates data
 
@@ -42,7 +44,7 @@ class ProfitResponse(BaseModel):
 
 # Already defined in main to have prefix "nasabah"
 @router.post("/daftar")
-def nasabah(request: NasabahRequest, db: Session = Depends(get_db)):
+def nasabah(token: Annotated[str, Depends(oauth2_scheme)], request: NasabahRequest, db: Session = Depends(get_db)):
     try:
         nasabah = crud_nasabah.make_nasabah(
             db=db,
@@ -65,14 +67,14 @@ def nasabah(request: NasabahRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("/")
-def list_nasabah(db: Session = Depends(get_db), response_model=List[NasabahResponse]):
+def list_nasabah(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db), response_model=List[NasabahResponse]):
     try:
         return crud_nasabah.get_all_nasabah(db=db)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("/profit")
-def list_profit(no_rekening: str=Query(), db: Session = Depends(get_db), response_model=List[ProfitResponse]):
+def list_profit(token: Annotated[str, Depends(oauth2_scheme)], no_rekening: str=Query(), db: Session = Depends(get_db), response_model=List[ProfitResponse]):
     try:
         return crud_nasabah.get_nasabah_profit(db=db, no_rekening=no_rekening)
     except Exception as e:

@@ -4,11 +4,14 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 import pandas as pd
 from io import StringIO
+from typing import Annotated
+from fastapi.security import OAuth2PasswordBearer
 
 from config import get_db
 from crud import harga as crud_harga
 
 router = APIRouter()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 class HargaResponse(BaseModel):
     tipe_sampah: int
@@ -20,7 +23,7 @@ class HargaResponse(BaseModel):
         from_atrributes = True
 
 @router.post("/upload-csv/")
-async def upload_harga_csv(file: UploadFile = File(...), db: Session = Depends(get_db)):
+async def upload_harga_csv(token: Annotated[str, Depends(oauth2_scheme)], file: UploadFile = File(...), db: Session = Depends(get_db)):
     if not file.filename.endswith(".csv"):
         raise HTTPException(status_code=400, detail="File must be a CSV")
 
@@ -38,7 +41,7 @@ async def upload_harga_csv(file: UploadFile = File(...), db: Session = Depends(g
     return {"message": "CSV processed and database updated successfully"}
 
 @router.get("/", response_model=List[HargaResponse])
-def lihat_harga(db: Session = Depends(get_db)):
+def lihat_harga(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
     try:
         return crud_harga.get_harga(db)
     except Exception as e:

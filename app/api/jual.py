@@ -1,12 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
+from typing import Annotated
+from fastapi.security import OAuth2PasswordBearer
 
 # User defined imports
 from config import get_db
 from crud import jual as crud_jual
 
 router = APIRouter()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # Pydantic is for data validation, unlike Mongoose that automatically validates data
 
@@ -17,7 +20,7 @@ class JualRequest(BaseModel):
 
 # Already defined in main to have prefix "jual"
 @router.post("/")
-def jual(request: JualRequest, db: Session = Depends(get_db)):
+def jual(token: Annotated[str, Depends(oauth2_scheme)], request: JualRequest, db: Session = Depends(get_db)):
     try:
         pemjualan = crud_jual.create_penjualan(
             db=db,
