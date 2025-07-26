@@ -2,61 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
   <script>
-    document.addEventListener("htmx:afterRequest", function(event) {
-      if (event.detail.xhr.responseURL.includes("/token") && event.detail.successful) {
-        try {
-          const data = JSON.parse(event.detail.xhr.responseText);
-          if (data.access_token) {
+    function loginUser(event) {
+      event.preventDefault();
+
+      fetch("/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          username: document.querySelector("#username").value,
+          password: document.querySelector("#password").value
+        })
+      })
+      .then(r => {
+        if (!r.ok) throw new Error("Invalid login");
+        return r.json();
+      })
+      .then(data => {
+        if (data.access_token) {
           localStorage.setItem("access_token", data.access_token);
-          document.querySelector("#login-message").innerText = "Login berhasil!"
-          // Redirect to dashboard
-          htmx.ajax(
-            'GET', '/dashboard', {
-            target: 'body',
-            swap: 'outerHTML'
-          })
-          }
-        } catch (e) {
-          document.querySelector("#login-message").innerText = "Gagal memproses token."
-        }
+          loadDashboard()
+        } else {
+          alert("Login failed");
         }
       })
+      .catch(err => alert(err.message));
+    }
 
-    document.addEventListener("htmx:configRequest", function(event) {
-      const token = localStorage.getItem("access_token")
-      console.log(token)
-        if (token) {
-          event.detail.headers['Authorization'] = `Bearer ${token}`
+    function loadDashboard() {
+      const token = localStorage.getItem("access_token");
+      fetch("/dashboard", {
+        headers: {
+          "Authorization": "Bearer " + token
         }
-    })
+      })
+      .then(r => r.text()) // dashboard returns HTML
+      .then(html => {
+        document.open();
+        document.write(html);
+        document.close();
+      });
+    }
   </script>
 </head>
 <body>
-<form hx-post="/token"
-      hx-target="#login-message"
-      hx-swap="innerHTML"
-      hx-encoding="application/x-www-form-urlencoded"
-      class="box">
-    <div class="field">
-        <label class="label">Username</label>
-        <input class="input" type="text" name="username" required>
-    </div>
-
-    <div class="field">
-        <label class="label">Password</label>
-        <input class="input" type="password" name="password" required>
-    </div>
-
-    <div class="control">
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Login</h1>
+      <form onsubmit="loginUser(event)">
+        <div class="field">
+          <input class="input" type="text" id="username" name="username" placeholder="Username" required>
+        </div>
+        <div class="field">
+          <input class="input" type="password" id="password" name="password" placeholder="Password" required>
+        </div>
         <button class="button is-primary" type="submit">Login</button>
+      </form>
     </div>
-</form>
-
-<div id="login-message"></div>
+  </section>
 </body>
 </html>

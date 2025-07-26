@@ -1,13 +1,11 @@
 <script src="../static/auth.js"></script>
 <h2 class="subtitle">Daftar Pembelian</h2>
-<div class="mb-4">
-  <a href="/api/export/pembelian" class="button is-link" download="pembelian.csv" hx-boost="false" hx-ignore="true">
-  Download Laporan CSV
-  </a>
-  <a href="/api/export/pembelian?format=xlsx" class="button is-success" download="pembelian.csv" hx-boost="false" hx-ignore="true">
-  Download Laporan XLSX
-  </a>
-</div>
+<button onclick="loadPage('/api/export/pembelian?format=csv')" class="button is-link">
+  Download CSV
+</button>
+<button onclick="loadPage('/api/export/pembelian?format=xlsx')" class="button is-success">
+  Download XLSX
+</button>
 <table class="table is-striped is-fullwidth">
   <thead>
     <tr>
