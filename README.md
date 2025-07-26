@@ -7,7 +7,7 @@
 Sebuah inovasi web app untuk melakukan digitalisasi pencatatan invetoris sampah, untung-rugi, dan tabungan nasabah serta agen. Teknologi yang digunakan adalah:
 - MariaDB (MySQL) sebagai database relasional utama
 - Python (Fast API) sebagai backend
-- HTML, CSS, JS sebagai antarmuka pencatatan sederhana
+- HTMX + Jinja Templating sebagai frontend
 
 ## 1. Setup Database
 
@@ -155,18 +155,13 @@ Bisa diakses melalui [dokumentasi FastAPI](https://fastapi.tiangolo.com/).
 
 ### API Endpoints
 
-| Keperluan                                              | URL                                     | Metode | Parameter             |
-|-------------------------------------------------------------|-----------------------------------------|--------|------------------------|
-| Lihat stok sampah                                               | api/sampah/              | GET   | tipe_sampah, is_sold   (opsional)                   |
-| Lihat rekap penjualan                       | api/export/penjualan?format=               | GET    | format csv atau xlsx (default csv)                      |
-| Lihat rekap pembelian                                          | api/export/pembelian?format=            | GET    | format csv atau xlsx (default csv)                     |
-| Tambah nasabah                                            | api/nasabah/          | POST |                     |
-| Beli sampah              | api/beli/         | POST | -                     |
-| Jual sampah                                            | api/jual/          | POST | -                     |
+Untuk mengakses tabel lengkap API endpoint bisa mengunjungi endpoint /docs.
 
 ## 3. Mengakses Admin Panel
 
-UNDER CONSTRUCTION
+![alt text](/assets/dashboard.png)
+
+Ketika server dijalankan, admin panel akan secara otomatis ter-load. Masukkan username dan password untuk mengakses dashboard serta endpoint lainnya. 
 
 ## Credits
 
