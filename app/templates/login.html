@@ -1,0 +1,19 @@
+<form hx-post="/login" hx-target="#login-msg" hx-swap="innerHTML" method="post" class="box">
+  <div class="field">
+    <label class="label">Username</label>
+    <div class="control">
+      <input class="input" type="text" name="username" required>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">Password</label>
+    <div class="control">
+      <input class="input" type="password" name="password" required>
+    </div>
+  </div>
+  <div class="control">
+    <button class="button is-primary" type="submit">Login</button>
+  </div>
+</form>
+
+<div id="login-msg"></div>
