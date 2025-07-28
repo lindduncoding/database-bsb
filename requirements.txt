@@ -7,3 +7,5 @@ pymysql
 pydantic
 openpyxl
 pyjwt
+passlib
+bcyrpt==4.0.1
