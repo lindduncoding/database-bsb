@@ -9,6 +9,8 @@ Sebuah inovasi web app untuk melakukan digitalisasi pencatatan invetoris sampah,
 - Python (Fast API) sebagai backend
 - HTMX + Jinja Templating sebagai frontend
 
+![dashboard](assets/dashboard.png)
+
 ## Dokumentasi
 
 Akses dokumentasi lengkap telah dipindah ke halaman wiki: [Wiki Database BSB](https://github.com/lindduncoding/database-bsb/wiki)
